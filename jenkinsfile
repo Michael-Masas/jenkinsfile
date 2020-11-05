@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Print Job Name') {
+            steps {
+                echo $JOB_NAME
+            }
+        }
+        stage('Print Build Number') {
+            steps {
+                echo $BUILD_NUMBER
+            }
+        }
+        stage('Print Workspace') {
+            steps {
+                echo $JENKINS_HOME
+            }
+        }
+    }
+}
