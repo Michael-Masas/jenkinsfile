@@ -1,21 +1,19 @@
-pipeline {
-    agent any
-
+pipeline { 
+    agent { dockerfile true }
     stages {
-        stage('Print Job Name') {
+        stage('Build') { 
             steps {
-                echo env.JOB_NAME
+                docker.build("microblog-image")
+				docker.image("microblog-image").withRun('-p 8000:5000', '--name microblog-con -d')
+                }
             }
         }
-        stage('Print Build Number') {
-            steps {
-                echo env.BUILD_NUMBER
-            }
+        post {
+            success {
+                echo "Pipeline successful"
         }
-        stage('Print Workspace') {
-            steps {
-                echo env.JENKINS_HOME
+			failure {
+				echo "The Pipeline failed :("
+                }
             }
-        }
-    }
 }
